@@ -1,0 +1,53 @@
+<!doctype html>
+<html ng-app="formModule">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+		<script src="dataControl.js"></script>
+	</head>
+	<body ng-controller="dataController" >
+		<h1>Add New Employee</h1>
+		
+		<div>
+			<form method="post" ng-init="buttonName='SUBMIT'" name="addemp" >
+			<p style="color:blue; ">Form Validation : {{addemp.$valid}}</p>
+			
+				<p>Employee Name: <input type="text" ng-model="person.name" name="name" placeholder="Enter name" 
+									ng-pattern="/^[A-Za-z. ]+$/"
+									autofocus required/>{{addemp.name.$valid}}</p>
+				<br/>                  
+                <span style="color:red" ng-show="addemp.name.$dirty && addemp.name.$invalid" >   
+                  Please Enter Valid  Name.!  
+                </span>
+				
+				<p>Employee City: <input type="text" ng-model="person.city" name="city" placeholder="Enter city" 
+									ng-pattern="/^[a-zA-Z0-9. ]*$/"
+									autofocus required/>{{addemp.city.$valid}}</p>
+				<br/>                  
+                <span style="color:red" ng-show="addemp.city.$dirty && addemp.city.$invalid" >   
+                  Please Enter Valid  City.!  
+                </span>
+				
+				<br/>
+				<button ng-click="saveOrUpdate(person.id)" ng-disabled="addemp.$invalid">{{buttonName}}</button>
+			</form>
+			<p style="color:blue;">status:: {{responseMessage}} / {{msg}}</p>
+		</div>
+		
+		<div ng-init="FunCall()">
+			<h2>Employee Data</h2>
+			<table border="0.5" cellspacing="0" cellpadding="10" >
+				<tr>
+					<th>ID</th><th>NAME</th><th>CITY</th><th>DELETE</th><th>UPDATE</th>
+				</tr>
+				<tr ng-repeat="p in persons">
+					<td><b>{{p.id}}</b></td>
+					<td>{{p.name}}</td>
+					<td>{{p.city}}</td>
+					<td><input type="checkbox" ng-click="delete(p.id)">del {{p.id}}</td>
+					<td><input type="checkbox" ng-click="update(p.id)">update {{p.id}}</td>
+				</tr>
+			</table>
+		</div>
+		
+	</body>
+</html>
