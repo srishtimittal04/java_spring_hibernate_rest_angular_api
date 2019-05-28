@@ -9,16 +9,20 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.concretepage.entity.Person;
+import com.concretepage.entity.PersonCredentials;
 
 @Repository	//for persistence and DAO (data access) layer in component
-@Transactional	//for entity manager
+@Transactional	//for entity manager		//acts as a proxy service
 public class PersonDAO {
 	@PersistenceContext
 	private EntityManager em;
 
 	@SuppressWarnings("unchecked")
 	public void createPerson(Person person) {	
-		em.persist(person); 		// to save like as we do in session.save(entity);
+		//PersonCredentials pc = new PersonCredentials(12,"abcd");		//no need, done with ARC tool
+		//person.setpersonCredentials(pc);
+		//System.out.println("\n\nsaving person and personcredentials by OneToOne "+person+"  "+pc+"\n\n");
+		em.persist(person);		// to save like as we do in session.save(entity);
 	}
 	
 	@SuppressWarnings("unchecked")

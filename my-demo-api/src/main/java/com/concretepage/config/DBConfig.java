@@ -40,7 +40,7 @@ public class DBConfig {
 	public DataSource getDataSource() {
 	    BasicDataSource dataSource = new BasicDataSource();
 	    dataSource.setDriverClassName(env.getProperty("database.driverClassName"));
-	    dataSource.setUrl(env.getProperty("database.url"));
+	    dataSource.setUrl(env.getProperty("database.url"));		//schema name (from database.properties file under resources)
 	    dataSource.setUsername(env.getProperty("database.username"));		//or set directly
 	    dataSource.setPassword(env.getProperty("database.password"));
 	    return dataSource;

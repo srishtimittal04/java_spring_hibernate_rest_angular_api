@@ -25,6 +25,7 @@ import com.concretepage.service.PersonService;
 @RestController		//class annotation indicates that the results of all methods declared in this class will be bound to the response body by default
 @RequestMapping("person")
 public class PersonController {
+	
 	@Autowired
 	private  PersonService service;
 	
@@ -32,6 +33,8 @@ public class PersonController {
 	public List<Person> getPersonDetails() {
 	//	List<Person> persons = new ArrayList<>();
 	//	return persons;
+		
+		System.out.println("\n ..........aop check............ \n");
 		return service.getAllData();
  	}
 	
@@ -40,6 +43,10 @@ public class PersonController {
 			return service.getIdDetails(ID);
  	}
 	
+	/*public Person getPersonIDDetailsWithoutApi(int ID) {		//used in many to one mapping
+		return service.getIdDetails(ID);
+	}*/
+	
 	@PostMapping(value="create")						//catching data from js UI or ARC extension
 	public void createPerson(@Valid @RequestBody Person person) {	
 		System.out.println("----------------- "+person);
@@ -47,6 +54,7 @@ public class PersonController {
 		service.createPerson(person);	
  	}
 	
+				//here no Model to store data, we using POJO class(that can be interpreted same as Model for data storage)
 	@PutMapping(value="update")
 	public void updateDetails(@RequestBody Person person) {
 		int id=person.getId();
@@ -69,9 +77,11 @@ public class PersonController {
 	  public ResponseEntity<Exception> assertionException(final Exception e) {
 		 HttpHeaders headers = new HttpHeaders();
 		 System.out.println("\n////////////Error//////////////\n"+e.getMessage());
-		// e.printStackTrace();
+		 e.printStackTrace();
 		 return new ResponseEntity<Exception>(e, headers, HttpStatus.INTERNAL_SERVER_ERROR);
 		 								//returns INTERNAL_SERVER_ERROR or 500 BAD REQUEST(when goes to validation class)
 	  }
+	
+	
 	 
 }
